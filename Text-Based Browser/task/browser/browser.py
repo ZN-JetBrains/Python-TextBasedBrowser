@@ -1,5 +1,6 @@
 # Author: Zaid Neurothrone
 
+from collections import deque
 import os
 import sys
 
@@ -40,6 +41,8 @@ websites = {"nytimes": nytimes_com, "bloomberg": bloomberg_com}
 saved_urls = []
 path = os.getcwd()
 
+my_stack = deque()
+
 
 def is_valid_url(a_url):
     if a_url.rfind(".com") == -1:
@@ -49,6 +52,7 @@ def is_valid_url(a_url):
 
 def save_website(a_url):
     global path
+    my_stack.append(a_url)
     with open(f"{path}/{a_url}", "w", encoding="utf-8") as out_file:
         out_file.write(websites[a_url])
 
@@ -77,6 +81,12 @@ def run():
 
         if user_input == "exit":
             break
+
+        if user_input == "back":
+            if len(my_stack) > 1:
+                my_stack.pop()
+                load_website(my_stack.pop())
+            continue
 
         if user_input in saved_urls:
             load_website(user_input)

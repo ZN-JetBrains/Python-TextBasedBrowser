@@ -177,6 +177,12 @@ files:
 
     TextBasedBrowserTest('browser.browser').run_tests()
   learner_created: false
+- name: browser/__init__.py
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/79/stages/438/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 10 Jan 2021 13:38:20 UTC
 record: -1

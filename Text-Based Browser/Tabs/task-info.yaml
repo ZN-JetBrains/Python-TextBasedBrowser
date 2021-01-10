@@ -163,12 +163,9 @@ files:
 - name: browser/tb_tabs/nytimes
   visible: true
   learner_created: true
-- name: browser/__init__.py
-  visible: true
-  learner_created: true
 feedback_link: https://hyperskill.org/projects/79/stages/437/implement#comment
 status: Solved
 feedback:
   message: Congratulations!
   time: Sun, 10 Jan 2021 10:26:47 UTC
-record: -1
+record: 2
