@@ -1,7 +1,9 @@
 # Author: Zaid Neurothrone
 
-nytimes_com = '''
-This New Liquid Is Magnetic, and Mesmerizing
+import os
+import sys
+
+nytimes_com = '''This New Liquid Is Magnetic, and Mesmerizing
 
 Scientists have created “soft” magnets that can flow 
 and change shape, and that could be a boon to medicine 
@@ -16,8 +18,7 @@ Jessica Wade has added nearly 700 Wikipedia biographies for
 
 '''
 
-bloomberg_com = '''
-The Space Race: From Apollo 11 to Elon Musk
+bloomberg_com = '''The Space Race: From Apollo 11 to Elon Musk
 
 It's 50 years since the world was gripped by historic images
  of Apollo 11, and Neil Armstrong -- the first man to walk 
@@ -35,14 +36,61 @@ Twitter and Square Chief Executive Officer Jack Dorsey
  Tuesday, a signal of the strong ties between the Silicon Valley giants.
 '''
 
-# write your code here
-while True:
-    user_input = input()
+websites = {"nytimes": nytimes_com, "bloomberg": bloomberg_com}
+saved_urls = []
+path = os.getcwd()
 
-    if user_input == "exit":
-        break
 
-    if user_input == "nytimes.com":
-        print(nytimes_com)
-    elif user_input == "bloomberg.com":
-        print(bloomberg_com)
+def is_valid_url(a_url):
+    if a_url.rfind(".com") == -1:
+        return False
+    return True
+
+
+def save_website(a_url):
+    global path
+    with open(f"{path}/{a_url}", "w", encoding="utf-8") as out_file:
+        out_file.write(websites[a_url])
+
+
+def load_website(a_url):
+    global path
+    with open(f"{path}/{a_url}", "r", encoding="utf-8") as in_file:
+        print(in_file.read())
+
+
+def run():
+    args = sys.argv
+    global path
+    try:
+        dir_name = args[1]
+        if dir_name is not None:
+            path += f"/{dir_name}"
+    except IndexError:
+        path += "/tb_tabs"
+
+    if not os.path.exists(path):
+        os.mkdir(path)
+
+    while True:
+        user_input = input().lower()
+
+        if user_input == "exit":
+            break
+
+        if user_input in saved_urls:
+            load_website(user_input)
+        elif is_valid_url(user_input):
+            url = user_input.split(".")[0]
+            saved_urls.append(url)
+            if url not in websites.keys():
+                print("[Error]: Url not found.")
+            else:
+                print(websites[url])
+                save_website(url)
+        else:
+            print("[Error]: Incorrect URL.")
+
+
+if __name__ == "__main__":
+    run()

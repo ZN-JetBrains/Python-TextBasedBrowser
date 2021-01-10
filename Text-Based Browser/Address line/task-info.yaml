@@ -70,12 +70,9 @@ files:
     \ Tuesday, a signal of the strong ties between the Silicon Valley giants.\n'''\n\
     \n# write your code here\n"
   learner_created: false
-- name: browser/__init__.py
-  visible: true
-  learner_created: true
 feedback_link: https://hyperskill.org/projects/79/stages/436/implement#comment
 status: Solved
 feedback:
   message: Congratulations!
   time: Fri, 18 Dec 2020 03:24:23 UTC
-record: -1
+record: 1
