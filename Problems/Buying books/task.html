@@ -1,0 +1,17 @@
+<h2>Buying books</h2>
+<html>
+ <head></head>
+ <body>
+  <p>A booklover regularly buys new books. Unfortunately, she doesn't have much time to read them immediately, so she always has a stack of unread books. When the booklover brings a new book, she puts it on top of the previously bought unread ones. Whenever she feels like reading, she takes a book from the very top of her book stack, finishes it in one go, and puts it on the shelf with the books she's already read.</p> 
+  <p>Given a sequence of the booklover's actions, print out all books that she reads. Books should be printed on separate lines.</p> 
+  <p>The input is as follows. The number n refers to the total number of actions. <samp>BUY book_name</samp> denotes buying a book called <samp>book_name</samp>, while <samp>READ </samp>refers to reading the book from the top of the stack.</p> 
+  <p>You can assume that initially, the booklover doesn't have any unread books.</p> 
+  <p><button class="btn-sm btn-outline-secondary" onclick="getElementById('hint-936').style.display='inline'"> Hint </button> </p>
+  <div id="hint-936" style="display:none;">
+    Use 
+   <code class="java">split(" ", 1)</code> to split the input string on the first whitespace only. This way, the book title will not be split. 
+  </div>
+  <p></p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">4<br>BUY Pride and Prejudice<br>BUY Anna Karenina<br>READ<br>BUY Hamlet<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">Anna Karenina</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">8<br>BUY Pride and Prejudice<br>BUY Anna Karenina<br>READ<br>BUY Hamlet<br>BUY Pride and Prejudice<br>BUY Anna Karenina<br>READ<br>BUY Hamlet</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">Anna Karenina<br>Anna Karenina</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 15 seconds</font><br><br>
+<a href="https://hyperskill.org/learn/step/8915">Show topic summary</a>
