@@ -1,105 +1,113 @@
 # Author: Zaid Neurothrone
 
 from collections import deque
+import requests
 import os
 import sys
 
-nytimes_com = '''This New Liquid Is Magnetic, and Mesmerizing
 
-Scientists have created “soft” magnets that can flow 
-and change shape, and that could be a boon to medicine 
-and robotics. (Source: New York Times)
-
-
-Most Wikipedia Profiles Are of Men. This Scientist Is Changing That.
-
-Jessica Wade has added nearly 700 Wikipedia biographies for
- important female and minority scientists in less than two 
- years.
-
-'''
-
-bloomberg_com = '''The Space Race: From Apollo 11 to Elon Musk
-
-It's 50 years since the world was gripped by historic images
- of Apollo 11, and Neil Armstrong -- the first man to walk 
- on the moon. It was the height of the Cold War, and the charts
- were filled with David Bowie's Space Oddity, and Creedence's 
- Bad Moon Rising. The world is a very different place than 
- it was 5 decades ago. But how has the space race changed since
- the summer of '69? (Source: Bloomberg)
+class Menu:
+    BACK = "back"
+    EXIT = "exit"
 
 
-Twitter CEO Jack Dorsey Gives Talk at Apple Headquarters
+class Browser:
 
-Twitter and Square Chief Executive Officer Jack Dorsey 
- addressed Apple Inc. employees at the iPhone maker’s headquarters
- Tuesday, a signal of the strong ties between the Silicon Valley giants.
-'''
+    def __init__(self):
+        self.saved_websites = list()
+        self.history_stack = deque()
+        self.path = os.getcwd()
+        self.setup_save_dir()
 
-websites = {"nytimes": nytimes_com, "bloomberg": bloomberg_com}
-saved_urls = []
-path = os.getcwd()
+    def setup_save_dir(self):
+        args = sys.argv
+        try:
+            dir_name = args[1]
+            if dir_name is not None:
+                self.path += f"/{dir_name}"
+        except IndexError:
+            self.path += "/tb_tabs"
 
-my_stack = deque()
+        if not os.path.exists(self.path):
+            os.mkdir(self.path)
 
+    def save_website(self, short_url, text):
+        self.history_stack.append(short_url)
+        with open(f"{self.path}/{short_url}", "w", encoding="utf-8") as out_file:
+            out_file.write(text)
 
-def is_valid_url(a_url):
-    if a_url.rfind(".com") == -1:
+    def load_website(self, short_url):
+        """Reads in and saves the website to the dictionary.
+        """
+        with open(f"{self.path}/{short_url}", "r") as in_file:
+            print(in_file.read())
+
+    @staticmethod
+    def display_website(text):
+        print(text)
+
+    @staticmethod
+    def is_url_valid(url):
+        if url.rfind(".") == -1:
+            return False
+        return True
+
+    @staticmethod
+    def has_url_protocol(url):
+        if url.startswith("https://"):
+            return True
         return False
-    return True
 
+    @staticmethod
+    def append_protocol(url):
+        return "https://" + url
 
-def save_website(a_url):
-    global path
-    my_stack.append(a_url)
-    with open(f"{path}/{a_url}", "w", encoding="utf-8") as out_file:
-        out_file.write(websites[a_url])
+    @staticmethod
+    def remove_protocol(url):
+        return url.split("https://")[1]
 
+    def access_website(self, url):
+        try:
+            request = requests.get(url)
+        except IndexError:
+            print("[Error]: Invalid url.")
+        else:
+            if request:
+                self.saved_websites.append(self.remove_protocol(url))
+                Browser.display_website(request.text)
+                self.save_website(Browser.remove_protocol(url), request.text)
 
-def load_website(a_url):
-    global path
-    with open(f"{path}/{a_url}", "r", encoding="utf-8") as in_file:
-        print(in_file.read())
+    def process_search_input(self, user_input):
+        url = user_input
+        if not Browser.is_url_valid(url):
+            print("[Error]: Incorrect URL.")
+            return
+
+        if not Browser.has_url_protocol(url):
+            if url in self.saved_websites:    # If website saved to file, render it
+                self.load_website(url)
+                return
+
+        url = Browser.append_protocol(url)    # Else access website on the internet and render it
+        self.access_website(url)
 
 
 def run():
-    args = sys.argv
-    global path
-    try:
-        dir_name = args[1]
-        if dir_name is not None:
-            path += f"/{dir_name}"
-    except IndexError:
-        path += "/tb_tabs"
-
-    if not os.path.exists(path):
-        os.mkdir(path)
+    browser = Browser()
 
     while True:
-        user_input = input().lower()
+        user_input = input().lower().strip()
 
-        if user_input == "exit":
+        if user_input == Menu.EXIT:
             break
 
-        if user_input == "back":
-            if len(my_stack) > 1:
-                my_stack.pop()
-                load_website(my_stack.pop())
-            continue
-
-        if user_input in saved_urls:
-            load_website(user_input)
-        elif is_valid_url(user_input):
-            url = user_input.split(".")[0]
-            saved_urls.append(url)
-            if url not in websites.keys():
-                print("[Error]: Url not found.")
-            else:
-                print(websites[url])
-                save_website(url)
+        if user_input == Menu.BACK:
+            if len(browser.history_stack) > 1:
+                browser.history_stack.pop()
+                short_url = browser.history_stack.pop()
+                browser.load_website(short_url)
         else:
-            print("[Error]: Incorrect URL.")
+            browser.process_search_input(user_input)
 
 
 if __name__ == "__main__":
