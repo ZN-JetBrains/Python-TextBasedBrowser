@@ -1,5 +1,6 @@
 # Author: Zaid Neurothrone
 
+from colorama import init, deinit, Fore
 from bs4 import BeautifulSoup
 from collections import deque
 import requests
@@ -20,6 +21,7 @@ class Browser:
         self.history_stack = deque()
         self.path = os.getcwd()
         self.setup_save_dir()
+        init()  # Initialize colorama
 
     def setup_save_dir(self):
         args = sys.argv
@@ -53,7 +55,10 @@ class Browser:
         parser = soup.find_all(Browser.tags_list, text=True)
         parsed_text = []
         for line in parser:
-            parsed_text.append(line.get_text().strip())
+            if line.get("href"):
+                parsed_text.append(Fore.BLUE + line.get_text().strip())
+            else:
+                parsed_text.append(Fore.BLACK + line.get_text().strip())
         return parsed_text
 
     @staticmethod
@@ -86,7 +91,6 @@ class Browser:
         try:
             request = requests.get(url)
         except requests.exceptions.ConnectionError:
-            # print("[Error]: Invalid url.")
             print("Incorrect URL")
         else:
             if request:
@@ -98,7 +102,6 @@ class Browser:
     def process_search_input(self, user_input):
         url = user_input
         if not Browser.is_url_valid(url):
-            # print("[Error]: Incorrect URL.")
             print("Incorrect URL")
             return
 
@@ -131,3 +134,4 @@ def run():
 
 if __name__ == "__main__":
     run()
+    deinit()  # Deactivate colorama

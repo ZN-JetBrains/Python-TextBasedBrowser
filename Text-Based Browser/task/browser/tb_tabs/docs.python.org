@@ -1,0 +1,78 @@
+[30m3.9.1 Documentation
+[30mNavigation
+[34mindex
+[34mmodules
+[34mPython
+[34m3.9.1 Documentation
+[30mPython 3.9.1 documentation
+[30mWelcome! This is the documentation for Python 3.9.1.
+[30mParts of the documentation:
+[34mWhat's new in Python 3.9?
+[34mall "What's new" documents
+[34mTutorial
+[34mLibrary Reference
+[34mLanguage Reference
+[34mPython Setup and Usage
+[34mPython HOWTOs
+[34mInstalling Python Modules
+[34mDistributing Python Modules
+[34mExtending and Embedding
+[34mPython/C API
+[34mFAQs
+[30mIndices and tables:
+[34mGlobal Module Index
+[34mGeneral Index
+[34mGlossary
+[34mSearch page
+[34mComplete Table of Contents
+[30mMeta information:
+[30mReporting bugs
+[34mReporting bugs
+[30mContributing to Docs
+[34mContributing to Docs
+[30mAbout the documentation
+[34mAbout the documentation
+[30mHistory and License of Python
+[34mHistory and License of Python
+[30mCopyright
+[34mCopyright
+[30mDownload
+[30mDownload these documents
+[34mDownload these documents
+[30mDocs by version
+[30mPython 3.10 (in development)
+[34mPython 3.10 (in development)
+[30mPython 3.9 (stable)
+[34mPython 3.9 (stable)
+[30mPython 3.8 (stable)
+[34mPython 3.8 (stable)
+[30mPython 3.7 (security-fixes)
+[34mPython 3.7 (security-fixes)
+[30mPython 3.6 (security-fixes)
+[34mPython 3.6 (security-fixes)
+[30mPython 3.5 (EOL)
+[34mPython 3.5 (EOL)
+[30mPython 2.7 (EOL)
+[34mPython 2.7 (EOL)
+[30mAll versions
+[34mAll versions
+[30mOther resources
+[30mPEP Index
+[34mPEP Index
+[30mBeginner's Guide
+[34mBeginner's Guide
+[30mBook List
+[34mBook List
+[30mAudio/Visual Talks
+[34mAudio/Visual Talks
+[30mPython Developerâs Guide
+[34mPython Developerâs Guide
+[30mNavigation
+[34mindex
+[34mmodules
+[34mPython
+[34m3.9.1 Documentation
+[34mCopyright
+[34mPlease donate.
+[34mFound a bug
+[34mSphinx
