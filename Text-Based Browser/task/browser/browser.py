@@ -13,6 +13,7 @@ class Menu:
 
 
 class Browser:
+    tags_list = ["title", "p", "h1", "h2", "h3", "h4", "h5", "h6", "a", "ul", "ol", "li"]
 
     def __init__(self):
         self.saved_websites = list()
@@ -32,20 +33,34 @@ class Browser:
         if not os.path.exists(self.path):
             os.mkdir(self.path)
 
-    def save_website(self, short_url, text):
+    def save_website(self, short_url, html_text):
         self.history_stack.append(short_url)
         with open(f"{self.path}/{short_url}", "w", encoding="utf-8") as out_file:
-            out_file.write(text)
+            parsed_text = Browser.parse_html(html_text)
+            # TODO: Test if writes correctly
+            for line in parsed_text:
+                out_file.write(line + "\n")
 
     def load_website(self, short_url):
         """Reads in and saves the website to the dictionary.
         """
         with open(f"{self.path}/{short_url}", "r") as in_file:
-            print(in_file.read())
+            Browser.print_parsed_website(in_file.read())
 
     @staticmethod
-    def display_website(text):
-        print(text)
+    def parse_html(html_text):
+        soup = BeautifulSoup(html_text, "html.parser")
+        parser = soup.find_all(Browser.tags_list, text=True)
+        parsed_text = []
+        for line in parser:
+            parsed_text.append(line.get_text().strip())
+        return parsed_text
+
+    @staticmethod
+    def print_parsed_website(text):
+        for line in text:
+            if line:
+                print(line)
 
     @staticmethod
     def is_url_valid(url):
@@ -72,11 +87,12 @@ class Browser:
             request = requests.get(url)
         except requests.exceptions.ConnectionError:
             # print("[Error]: Invalid url.")
-            print("Invalid url")
+            print("Incorrect URL")
         else:
             if request:
                 self.saved_websites.append(self.remove_protocol(url))
-                Browser.display_website(request.text)
+                parsed_text = Browser.parse_html(request.text)
+                Browser.print_parsed_website(parsed_text)
                 self.save_website(Browser.remove_protocol(url), request.text)
 
     def process_search_input(self, user_input):

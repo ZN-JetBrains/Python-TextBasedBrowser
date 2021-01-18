@@ -19,16 +19,24 @@ class TextBasedBrowserTest(StageTest):
 
     def generate(self):
 
-        dir_for_files = 'tb_tabs'
+        dir_for_files = os.path.join(os.curdir, 'tb_tabs')
         return [
             TestCase(
-                stdin='bloomberg.com\nbloomberg\nexit',
-                attach='Bloomberg',
+                stdin='www.python.org\nexit',
+                attach='Python',
                 args=[dir_for_files]
             ),
             TestCase(
                 stdin='nytimes.com\nnytimes\nexit',
                 attach='The New York Times',
+                args=[dir_for_files]
+            ),
+            TestCase(
+                stdin='nytimescom\nexit',
+                args=[dir_for_files]
+            ),
+            TestCase(
+                stdin='bloombergcom\nexit',
                 args=[dir_for_files]
             ),
         ]
@@ -46,15 +54,16 @@ class TextBasedBrowserTest(StageTest):
         path, dirs, filenames = next(os.walk(path_for_tabs))
 
         for file in filenames:
-            print("file: {}".format(file))
+
             with open(os.path.join(path_for_tabs, file), 'r', encoding='utf-8') as tab:
                 try:
                     content = tab.read()
                 except UnicodeDecodeError:
                     return -1
-                print(content)
-                if 'html' in content and right_word in content:
-                    return 1
+
+                if '</p>' not in content and '</script>' not in content:
+                    if '</div>' not in content and right_word in content:
+                        return 1
 
         return 0
 
@@ -63,7 +72,7 @@ class TextBasedBrowserTest(StageTest):
         # Incorrect URL
         if attach is None:
             if '<p>' in reply:
-                return CheckResult.wrong('You haven\'t checked whether the URL was correct')
+                return CheckResult.wrong('You haven\'t checked whether URL was correct')
             else:
                 return CheckResult.correct()
 
@@ -88,10 +97,11 @@ class TextBasedBrowserTest(StageTest):
             except PermissionError:
                 return CheckResult.wrong("Impossible to remove the directory for tabs. Perhaps you haven't closed some file?")
 
-            if '<body' in reply and right_word in reply:
-                return CheckResult.correct()
+            if '</p>' not in reply and '</div>' not in reply:
+                if right_word in reply:
+                    return CheckResult.correct()
 
-            return CheckResult.wrong('You haven\'t print result of request')
+            return CheckResult.wrong('You haven\'t parsed result of request')
 
 
 TextBasedBrowserTest('browser.browser').run_tests()
