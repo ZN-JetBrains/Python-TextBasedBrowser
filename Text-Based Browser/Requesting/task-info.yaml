@@ -102,6 +102,9 @@ files:
 
     TextBasedBrowserTest('browser.browser').run_tests()
   learner_created: false
+- name: browser/tb_tabs/docs.python.org
+  visible: true
+  learner_created: true
 - name: browser/browser.py
   visible: true
   text: "\nnytimes_com = '''\nThis New Liquid Is Magnetic, and Mesmerizing\n\nScientists\
@@ -121,9 +124,6 @@ files:
     \ Tuesday, a signal of the strong ties between the Silicon Valley giants.\n'''\n\
     \n# write your code here\n"
   learner_created: false
-- name: browser/tb_tabs/docs.python.org
-  visible: true
-  learner_created: true
 feedback_link: https://hyperskill.org/projects/79/stages/439/implement#comment
 status: Solved
 feedback:

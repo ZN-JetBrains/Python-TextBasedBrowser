@@ -1,5 +1,6 @@
 # Author: Zaid Neurothrone
 
+from bs4 import BeautifulSoup
 from collections import deque
 import requests
 import os
@@ -69,8 +70,9 @@ class Browser:
     def access_website(self, url):
         try:
             request = requests.get(url)
-        except IndexError:
-            print("[Error]: Invalid url.")
+        except requests.exceptions.ConnectionError:
+            # print("[Error]: Invalid url.")
+            print("Invalid url")
         else:
             if request:
                 self.saved_websites.append(self.remove_protocol(url))
@@ -80,7 +82,8 @@ class Browser:
     def process_search_input(self, user_input):
         url = user_input
         if not Browser.is_url_valid(url):
-            print("[Error]: Incorrect URL.")
+            # print("[Error]: Incorrect URL.")
+            print("Incorrect URL")
             return
 
         if not Browser.has_url_protocol(url):
