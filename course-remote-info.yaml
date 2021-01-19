@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/255229/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Sun, 17 Jan 2021 22:50:17 UTC
+update_date: Tue, 19 Jan 2021 06:23:01 UTC
 stages:
 - id: 436
   step: 7210
@@ -136,6 +136,12 @@ topics:
   - title: Stack in Python
     theory_id: 8915
   3:
+  - title: Dictionary
+    theory_id: 6481
+  - title: Create module
+    theory_id: 6057
+  - title: Packages
+    theory_id: 6384
   - title: World Wide Web
     theory_id: 6633
   - title: HyperText Transfer Protocol
@@ -144,12 +150,6 @@ topics:
     theory_id: 6740
   - title: HTTP messages
     theory_id: 6752
-  - title: Dictionary
-    theory_id: 6481
-  - title: Create module
-    theory_id: 6057
-  - title: Packages
-    theory_id: 6384
   - title: Pip
     theory_id: 6230
   - title: 'Requests: retrieving data'
@@ -161,8 +161,6 @@ topics:
   - title: HTML page structure
     theory_id: 6491
   4:
-  - title: XML
-    theory_id: 6901
   - title: Program execution
     theory_id: 6047
   - title: While loop
@@ -171,6 +169,8 @@ topics:
     theory_id: 6052
   - title: Exceptions
     theory_id: 6042
+  - title: XML
+    theory_id: 6901
   - title: BeautifulSoup
     theory_id: 10209
   - title: Built-in exceptions
